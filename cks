@@ -59,3 +59,5 @@ k config set-credentials 60099@internal.users --client-key=60099.key --client-ce
 k config set-context 60099@internal.users --cluster=kubernetes --user=60099@internal.users
 k config get-contexts
 k config use-context 60099@internal.users
+
+CertificateSigningRequests sign via API

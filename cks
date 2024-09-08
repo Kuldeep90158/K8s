@@ -1,0 +1,6 @@
+Apiserver NodeRestriction
+
+The Kubelet on node01 shouldn't be able to set Node labels
+We need to enable the NodeRestriction in the Apiserver manifest
+>     - --enable-admission-plugins=NodeRestriction
+>     watch crictl ps

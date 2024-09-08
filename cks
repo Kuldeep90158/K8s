@@ -1,6 +1,18 @@
-Apiserver NodeRestriction
+1.  Apiserver NodeRestriction
 
 The Kubelet on node01 shouldn't be able to set Node labels
 We need to enable the NodeRestriction in the Apiserver manifest
 >     - --enable-admission-plugins=NodeRestriction
 >     watch crictl ps
+
+2.  Check existing AppArmor profiles
+
+You're asked to verify if the following AppArmor profiles are available on node01 :
+
+docker-default
+snap.lxd.lxc
+ftpd
+/usr/sbin/tcpdump
+
+> apparmor_status
+> apparmor_parser <path/to/profile>

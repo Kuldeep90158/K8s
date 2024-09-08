@@ -17,7 +17,7 @@ ftpd
 > apparmor_status
 > apparmor_parser <path/to/profile>
 
-Enable Audit Logging for giving Audit Policy
+3.  Enable Audit Logging for giving Audit Policy
 >Edit the /etc/kubernetes/manifests/kube-apiserver.yaml
 ># add new Volumes
 volumes:
@@ -46,3 +46,16 @@ spec:
     - --audit-log-path=/etc/kubernetes/audit-logs/audit.log
     - --audit-log-maxsize=7
     - --audit-log-maxbackup=2
+
+4. CertificateSigningRequests sign manually
+>openssl genrsa -out 60099.key 2048
+>openssl req -new -key 60099.key -out 60099.csr
+# set Common Name = 60099@internal.users
+
+openssl x509 -req -in XXX -CA XXX -CAkey XXX -CAcreateserial -out XXX -days 500
+find /etc/kubernetes/pki | grep ca
+
+k config set-credentials 60099@internal.users --client-key=60099.key --client-certificate=60099.crt
+k config set-context 60099@internal.users --cluster=kubernetes --user=60099@internal.users
+k config get-contexts
+k config use-context 60099@internal.users

@@ -16,3 +16,33 @@ ftpd
 
 > apparmor_status
 > apparmor_parser <path/to/profile>
+
+Enable Audit Logging for giving Audit Policy
+>Edit the /etc/kubernetes/manifests/kube-apiserver.yaml
+># add new Volumes
+volumes:
+  - name: audit-policy
+    hostPath:
+      path: /etc/kubernetes/audit-policy/policy.yaml
+      type: File
+  - name: audit-logs
+    hostPath:
+      path: /etc/kubernetes/audit-logs
+      type: DirectoryOrCreate
+># add new VolumeMounts
+volumeMounts:
+  - mountPath: /etc/kubernetes/audit-policy/policy.yaml
+    name: audit-policy
+    readOnly: true
+  - mountPath: /etc/kubernetes/audit-logs
+    name: audit-logs
+    readOnly: false
+># enable Audit Logs
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --audit-policy-file=/etc/kubernetes/audit-policy/policy.yaml
+    - --audit-log-path=/etc/kubernetes/audit-logs/audit.log
+    - --audit-log-maxsize=7
+    - --audit-log-maxbackup=2

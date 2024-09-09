@@ -61,3 +61,7 @@ k config get-contexts
 k config use-context 60099@internal.users
 
 CertificateSigningRequests sign via API
+
+CIS Benchmarks fix Controlplane
+
+>kube-bench run --targets master --check 1.2.20
